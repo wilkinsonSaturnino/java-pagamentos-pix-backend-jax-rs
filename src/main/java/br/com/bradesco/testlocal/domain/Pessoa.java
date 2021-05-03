@@ -10,9 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pessoa")
@@ -21,7 +22,8 @@ public class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PES_SEQ")
+    @SequenceGenerator(sequenceName = "pessoa_seq", allocationSize = 1, name = "PES_SEQ")
 	@Column(name = "id")
 	private long id;
 	
@@ -37,7 +39,7 @@ public class Pessoa implements Serializable {
 	@Column(name = "digito")
 	private Integer digito;
 	
-	@JsonManagedReference // Serializa a propriedade anotada (referência direta)
+	@JsonIgnore
 	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.REMOVE)
 	private List<Pagamento> pagamentos;
 

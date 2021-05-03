@@ -13,9 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -25,7 +26,8 @@ public class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PAG_SEQ")
+    @SequenceGenerator(sequenceName = "pagamento_seq", allocationSize = 1, name = "PAG_SEQ")
 	@Column(name = "id")
 	private long id;
 	
@@ -47,7 +49,7 @@ public class Pagamento implements Serializable {
 	@Column(name = "descricao")
 	private String descricao;
 		
-	@JsonBackReference // Ignora a serialização da propriedade anotada
+	@JsonManagedReference // Serializa a propriedade anotada (referência direta)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(foreignKey = @ForeignKey(name = "pessoa_fkey"))
 	private Pessoa pessoa;
