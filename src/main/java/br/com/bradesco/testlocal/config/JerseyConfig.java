@@ -3,6 +3,7 @@ package br.com.bradesco.testlocal.config;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
+import br.com.bradesco.testlocal.controller.PagamentoController;
 import br.com.bradesco.testlocal.controller.PessoaController;
 
 /*
@@ -20,6 +21,7 @@ public class JerseyConfig extends ResourceConfig {
 
 	public JerseyConfig() {
 		register(PessoaController.class);
+		register(PagamentoController.class);
 		register(CORSFilter.class);
 	}
 	
